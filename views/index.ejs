@@ -6,17 +6,23 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>登录</p>
+    <h1>REST API</h1>
+    <p>
+      登录 - POST http://localhost:3000/account/login
+      数据格式 {username:string, password:string}
+    </p>
     <form method="post" action="http://localhost:3000/account/login">
       <lable for='username'>用户名</lable>
       <input type='text' name='username' />
       <label for='password'>密码</label>
       <input type="password" name="password">
-      <input type='submit'>登录</input>
+      <input type='submit'></input>
     </form>
 
-    <p>注册</p>
+    <p>
+      注册 - POST http://localhost:3000/account/regist
+      数据格式 {username:string, password:string, email:string, moblie:string}
+    </p>
     <form method="post" action="http://localhost:3000/account/regist">
       <lable for='username'>用户名</lable>
       <input type='text' name='username' />
@@ -26,16 +32,43 @@
       <input type='text' name='email' />
       <label for='mobile'>手机</label>
       <input type="text" name="mobile">
-      <input type='submit'>登录</input>
+      <input type='submit'></input>
     </form>
 
-    <p>查询</p>
+    <p>
+      查询 - POST http://localhost:3000/account/check
+      数据格式 {username:string}
+    </p>
     <form method="post" action="http://localhost:3000/account/check">
       <lable for='username'>用户名</lable>
       <input type='text' name='username' />
-<!--       <label for='password'>密码</label>
-      <input type="password" name="password"> -->
-      <input type='submit'>登录</input>
+      <input type='submit'></input>
+    </form>
+
+    <p>
+      更新 - POST http://localhost:3000/account/update
+      数据格式 {_id:string....}
+    </p>
+    <form method="post" action="http://localhost:3000/account/update">
+      <lable for='_id'>_id</lable>
+      <input type='text' name='_id' />
+      <lable for='nickName'>昵称</lable>
+      <input type='text' name='nickName' />
+      <lable for='name'>名字</lable>
+      <input type='text' name='name' />
+      <lable for='company'>公司</lable>
+      <input type='text' name='company' />
+      <lable for='province'>省份</lable>
+      <input type='text' name='province' />
+      <lable for='address'>地址</lable>
+      <input type='text' name='address' />
+      <lable for='mobile'>手机</lable>
+      <input type='text' name='mobile' />
+      <lable for='telephone'>座机</lable>
+      <input type='text' name='telephone' />
+      <lable for='email'>邮箱</lable>
+      <input type='text' name='email' />
+      <input type='submit'></input>
     </form>
 
   </body>
