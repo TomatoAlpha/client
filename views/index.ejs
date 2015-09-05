@@ -8,8 +8,8 @@
   <body>
     <h1>REST API</h1>
     <p>
-      登录 - POST http://localhost:3000/account/login
-      数据格式 {username:string, password:string}
+      登录 - POST http://localhost:3000/account/login <br>
+      数据格式 {username:string, password:string}<br>
     </p>
     <form method="post" action="http://localhost:3000/account/login">
       <lable for='username'>用户名</lable>
@@ -20,8 +20,8 @@
     </form>
 
     <p>
-      注册 - POST http://localhost:3000/account/regist
-      数据格式 {username:string, password:string, email:string, moblie:string}
+      注册 - POST http://localhost:3000/account/regist<br>
+      数据格式 {username:string, password:string, email:string, moblie:string}<br>
     </p>
     <form method="post" action="http://localhost:3000/account/regist">
       <lable for='username'>用户名</lable>
@@ -36,8 +36,8 @@
     </form>
 
     <p>
-      查询 - POST http://localhost:3000/account/check
-      数据格式 {username:string}
+      查询 - POST http://localhost:3000/account/check<br>
+      数据格式 {username:string}<br>
     </p>
     <form method="post" action="http://localhost:3000/account/check">
       <lable for='username'>用户名</lable>
@@ -46,30 +46,80 @@
     </form>
 
     <p>
-      更新 - POST http://localhost:3000/account/update
-      数据格式 {_id:string....}
+      更新 - POST http://localhost:3000/account/update<br>
+      数据格式 {_id:string....}<br>
     </p>
-    <form method="post" action="http://localhost:3000/account/update">
+      <p>执行更新的用户：</p>
       <lable for='_id'>_id</lable>
-      <input type='text' name='_id' />
+      <input type='text' id='a_id' />
+      <lable for='token'>token</lable>
+      <input type='text' id='atoken' />
+      <p>被更新的用户：</p>
+      <lable for='_id'>_id</lable>
+      <input type='text' id='_id' />
+      <lable for='token'>token</lable>
+      <input type='text' id='token' />
       <lable for='nickName'>昵称</lable>
-      <input type='text' name='nickName' />
+      <input type='text' id='nickName' />
       <lable for='name'>名字</lable>
-      <input type='text' name='name' />
-      <lable for='company'>公司</lable>
-      <input type='text' name='company' />
+      <input type='text' id='name' />
+      <lable for='orgnization'>组织(*请先创建组织)</lable>
+      <input type='text' id='orgnization' />
       <lable for='province'>省份</lable>
-      <input type='text' name='province' />
+      <input type='text' id='province' />
       <lable for='address'>地址</lable>
-      <input type='text' name='address' />
+      <input type='text' id='address' />
       <lable for='mobile'>手机</lable>
-      <input type='text' name='mobile' />
+      <input type='text' id='mobile' />
       <lable for='telephone'>座机</lable>
-      <input type='text' name='telephone' />
+      <input type='text' id='telephone' />
       <lable for='email'>邮箱</lable>
-      <input type='text' name='email' />
-      <input type='submit'></input>
-    </form>
-
+      <input type='text' id='email' />
+      <label for='password'>密码</label>
+      <input type="password" id="password">
+      <button onclick='loadXMLDoc()'>递交</button>
+   <p>执行结果：</p><br>
+   <div id='myDiv'></div>
+<script>
+  
+  function loadXMLDoc()
+  {
+    var update = {
+      executor:{
+        _id:document.getElementById('a_id').value,
+        token:document.getElementById('atoken').value
+      },
+      update:{
+        _id:document.getElementById('_id').value,
+        token:document.getElementById('token').value,
+        nickName:document.getElementById('nickName').value,
+        name:document.getElementById('name').value,
+        orgnization:document.getElementById('orgnization').value,
+        province:document.getElementById('province').value,
+        address:document.getElementById('address').value,
+        mobile:document.getElementById('mobile').value,
+        telephone:document.getElementById('telephone').value,
+        email:document.getElementById('email').value,
+        password:document.getElementById('password').value
+      }
+    }
+    
+  var xmlhttp;
+  if (window.XMLHttpRequest)
+    {// code for IE7+, Firefox, Chrome, Opera, Safari
+    xmlhttp=new XMLHttpRequest();
+    }
+  else
+    {// code for IE6, IE5
+    xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+    }
+  xmlhttp.onreadystatechange=function()
+    {
+      document.getElementById("myDiv").innerHTML=xmlhttp.responseText;
+    }
+  xmlhttp.open("POST","http://localhost:3000/account/update",true);
+  xmlhttp.send(JSON.stringify(update));
+  }
+</script>
   </body>
 </html>
