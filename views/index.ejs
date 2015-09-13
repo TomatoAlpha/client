@@ -80,8 +80,24 @@
       <button onclick='loadXMLDoc()'>递交</button>
    <p>执行结果：</p><br>
    <div id='myDiv'></div>
+
+   <p>
+     创建问卷 - POST http://localhost:3000/paper/create<br>
+   </p>
+   <form method='post' action='http://localhost:3000/paper/create' enctype='multipart/form-data'>
+     <lable for='uid'>用户id</lable>
+     <input type='text' name='uid' /><br>
+     <lable for='token'>用户token</lable>
+     <input type='text' name='token' /><br>
+     <lable for='cid'>隶属组织_id</lable>
+     <input type='text' name='cid' /><br>
+     <input type='file' name='file' /><br>
+     <input type='submit'></input>
+   </form>
+
 <script>
   
+
   function loadXMLDoc()
   {
     var update = {
@@ -103,7 +119,7 @@
         password:document.getElementById('password').value
       }
     }
-    
+
   var xmlhttp;
   if (window.XMLHttpRequest)
     {// code for IE7+, Firefox, Chrome, Opera, Safari
