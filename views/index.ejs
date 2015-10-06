@@ -36,7 +36,18 @@
     </form>
 
     <p>
-      查询 - POST http://localhost:3000/account/check<br>
+      查询用户信息 - POST http://localhost:3000/account/info<br>
+      数据格式 {uid:string, token:string}<br>
+    </p>
+    <lable for='uid'>用户ID</lable>
+    <input type='text' name='uid' id='i_uid' />
+    <lable for='token'>token</lable>
+    <input type='text' name='token' id='i_token' />
+    <button name='submit' onclick='loadXMLDocI()'>提交</button>
+    <div id='myDiv5'></div>
+
+    <p>
+      查询用户名 - POST http://localhost:3000/account/check<br>
       数据格式 {username:string}<br>
     </p>
     <form method="post" action="http://localhost:3000/account/check">
@@ -77,7 +88,7 @@
       <input type='text' id='email' />
       <label for='password'>密码</label>
       <input type="password" id="password">
-      <button onclick='loadXMLDoc()'>递交</button>
+      <button onclick='loadXMLDocA()'>递交</button>
    <p>执行结果：</p><br>
    <div id='myDiv'></div>
 
@@ -89,15 +100,154 @@
      <input type='text' name='uid' /><br>
      <lable for='token'>用户token</lable>
      <input type='text' name='token' /><br>
-     <lable for='cid'>隶属组织_id</lable>
-     <input type='text' name='cid' /><br>
+     <lable for='oid'>隶属组织_id</lable>
+     <input type='text' name='oid' /><br>
      <input type='file' name='file' /><br>
      <input type='submit'></input>
    </form>
 
-<script>
+   <p>
+     查看问卷详情 - POST http://localhost:3000/paper/view<br>
+   </p>
+     <lable for='uid'>用户id</lable>
+     <input type='text' name='uid' id='v_uid' /><br>
+     <lable for='token'>用户token</lable>
+     <input type='text' name='token' id='v_token' /><br>
+     <lable for='oid'>隶属组织_id</lable>
+     <input type='text' name='oid' id='v_oid' /><br>
+     <lable for='oid'>问卷_id</lable>
+     <input type='text' name='pid' id='v_pid' /><br>
+     <button name='submit' onclick='loadXMLDocB()'>递交</button>
+     <p>执行结果：</p><br>
+     <div id='myDiv1'></div>
 
-  function loadXMLDoc()
+     <p>
+       列出问卷 - POST http://localhost:3000/paper/list<br>
+     </p>
+     <lable for='uid'>用户id</lable>
+     <input type='text' name='uid' id='l_uid' /><br>
+     <lable for='token'>用户token</lable>
+     <input type='text' name='token' id='l_token' /><br>
+     <lable for='oid'>隶属组织_id</lable>
+     <input type='text' name='oid' id='l_oid' /><br>
+     <button onclick='loadXMLDocL()'>提交</button>
+     <div id='myDiv4'></div>
+
+     <p>
+       调问卷数据 - GET http://localhost:3000/paper/{pid}<br>
+     </p>
+     <lable for='oid'>问卷id</lable>
+     <input type='text' name='pid' id='_pid' /><br>
+     <button name='submit' onclick='loadXMLDocC()'>递交</button>
+     <div id='myDiv2'></div>
+
+     <p>
+       做调查卷 - Post http://localhost:3000/paper/{pid}<br>
+     </p>
+     <lable for='pid'>问题id</lable>
+     <input type='text' name='pid' id='d_qid' /><br>
+     <lable for='cid'>微信用户id</lable>
+     <input type='text' name='cid' id='d_cid' /><br>
+     <lable for='answer'>答案</lable>
+     <input type='text' name='answer' id='d_answer' /><br>
+     <lable for='timeTickes'>做题时间</lable>
+     <input type='text' name='timeTickes' id='d_timeTickes' /><br>
+     <button name='submit' onclick='loadXMLDocD()'>递交</button>
+     <div id='myDiv3'></div>
+
+<script>
+  function loadXMLDocI(){
+    var update = {
+      uid: document.getElementById('i_uid').value,
+      token: document.getElementById('i_token').value
+    };
+    var xmlhttp;
+    if (window.XMLHttpRequest){// code for IE7+, Firefox, Chrome, Opera, Safari
+      xmlhttp = new XMLHttpRequest();
+    } else {// code for IE6, IE5
+      xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xmlhttp.onreadystatechange=function() {
+      document.getElementById("myDiv5").innerHTML=xmlhttp.responseText;
+    }
+    xmlhttp.open("POST","http://localhost:3000/account/info",true);
+    xmlhttp.send(JSON.stringify(update));
+  }
+
+  function loadXMLDocL(){
+    var update = {
+      uid: document.getElementById('l_uid').value,
+      token: document.getElementById('l_token').value,
+      oid: document.getElementById('l_oid').value
+    };
+    var xmlhttp;
+    if (window.XMLHttpRequest){// code for IE7+, Firefox, Chrome, Opera, Safari
+      xmlhttp = new XMLHttpRequest();
+    } else {// code for IE6, IE5
+      xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xmlhttp.onreadystatechange=function() {
+      document.getElementById("myDiv4").innerHTML=xmlhttp.responseText;
+    }
+    xmlhttp.open("POST","http://localhost:3000/paper/list",true);
+    xmlhttp.send(JSON.stringify(update));
+  }
+
+  function loadXMLDocD(){
+    var update = {
+      qid: document.getElementById('d_qid').value,
+      cid: document.getElementById('d_cid').value,
+      answer: document.getElementById('d_answer').value,
+      timeTickes: document.getElementById('d_timeTickes').value,
+      date: new Date()
+    };
+    var xmlhttp;
+    if (window.XMLHttpRequest){// code for IE7+, Firefox, Chrome, Opera, Safari
+      xmlhttp = new XMLHttpRequest();
+    } else {// code for IE6, IE5
+      xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xmlhttp.onreadystatechange=function() {
+      document.getElementById("myDiv3").innerHTML=xmlhttp.responseText;
+    }
+    xmlhttp.open("POST","http://localhost:3000/paper",true);
+    xmlhttp.send(JSON.stringify(update));
+  }
+
+  function loadXMLDocC(){
+    var xmlhttp;
+    if (window.XMLHttpRequest){// code for IE7+, Firefox, Chrome, Opera, Safari
+      xmlhttp = new XMLHttpRequest();
+    } else {// code for IE6, IE5
+      xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xmlhttp.onreadystatechange=function() {
+      document.getElementById("myDiv2").innerHTML=xmlhttp.responseText;
+    }
+    xmlhttp.open("GET","http://localhost:3000/paper/" + document.getElementById('_pid').value,true);
+    xmlhttp.send();
+  }
+
+  function loadXMLDocB(){
+    var update = {
+      uid:document.getElementById('v_uid').value,
+      token:document.getElementById('v_token').value,
+      oid:document.getElementById('v_oid').value
+    }
+    var xmlhttp;
+    if (window.XMLHttpRequest){// code for IE7+, Firefox, Chrome, Opera, Safari
+      xmlhttp = new XMLHttpRequest();
+    } else {// code for IE6, IE5
+      xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+    xmlhttp.onreadystatechange=function() {
+      document.getElementById("myDiv1").innerHTML=xmlhttp.responseText;
+    }
+    xmlhttp.open("POST","http://localhost:3000/paper/view/" + document.getElementById('v_pid').value,true);
+    xmlhttp.send(JSON.stringify(update));
+  }
+
+  function loadXMLDocA()
   {
     var update = {
       executor:{
